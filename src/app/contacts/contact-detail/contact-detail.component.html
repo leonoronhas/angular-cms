@@ -4,21 +4,25 @@
       <div class="panel-heading clearfix">
         <div class="pull-left">
           <span class="u-header-2">{{ contact.name }}</span>
+          <img
+            [src]="contact.imageUrl"
+            [alt]="contact.name"
+            class="img-responsive"
+            style="max-height: 100px"
+          />
         </div>
         <div class="pull-right">
-          <a class="btn btn-primary">Edit</a>
+          <a class="btn btn-primary" style="margin-right: 1rem;">Edit</a>
           <a class="btn btn-danger">Delete</a>
         </div>
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-xs-12">
-            <strong>Email:</strong>
-          </div>
+          <div class="col-xs-12"><strong>Email: </strong>{{ contact.name }}</div>
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <strong>Phone:</strong>
+            <strong>Phone: </strong>{{ contact.phone }}
           </div>
         </div>
       </div>
