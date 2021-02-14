@@ -5,11 +5,6 @@
     </h2>
   </div>
   <div class="col-md-4">
-    <h2>
-      <cms-contact-detail
-        [contact]="selectedContact"
-        *ngIf="selectedContact"
-      ></cms-contact-detail>
-    </h2>
+    <router-outlet></router-outlet>
   </div>
 </div>
