@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Document } from '../document.model';
+import { Subscription } from 'rxjs';
 import { DocumentService } from '../document.service';
 @Component({
   selector: 'cms-document-list',
@@ -9,6 +10,7 @@ import { DocumentService } from '../document.service';
 export class DocumentListComponent implements OnInit {
   @Output() selectedCDocumentEvent = new EventEmitter<Document>();
   documents: Document[] = [];
+  private subscription: Subscription;
 
   constructor(private documentService: DocumentService) {}
 
@@ -19,5 +21,15 @@ export class DocumentListComponent implements OnInit {
         this.documents = documents.slice();
       }
     );
+
+    this.subscription = this.documentService.documentListChangedEvent.subscribe(
+      (documentList: Document[]) => {
+        this.documents = documentList;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
