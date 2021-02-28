@@ -58,6 +58,7 @@ export class ContactService {
     this.maxContactID++;
     newContact.id = this.maxContactID.toString();
     this.contacts.push(newContact);
+    this.contactChangedEvent.next(this.contacts.slice());
   }
 
   updateContact(originalContact: Contact, newDoc: Contact) {
@@ -76,5 +77,6 @@ export class ContactService {
 
     newDoc.id = originalContact.id;
     this.contacts[pos] = newDoc;
+    this.contactListChangedEvent.next([...this.contacts]);
   }
 }
