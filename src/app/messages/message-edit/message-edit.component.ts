@@ -15,32 +15,32 @@ import { MessageService } from '../message.service';
   styleUrls: ['./message-edit.component.css'],
 })
 export class MessageEditComponent implements OnInit {
-  @ViewChild('subject') subject: ElementRef;
-  @ViewChild('msgText') msgText: ElementRef;
+  @ViewChild('subject', { static: false }) subjectInputRef: ElementRef;
+  @ViewChild('msgText', { static: false }) msgTextInputRef: ElementRef;
   @Output() addMessageEvent = new EventEmitter<Message>();
-  currentSender = 'Leo Santos';
+  currentSender = '60551d454d440f6dbc82594a';
 
   constructor(private messageService: MessageService) {}
 
   ngOnInit(): void {}
 
   onSendMessage() {
-    const msgSubject: string = this.subject.nativeElement.value;
-    const msgText: string = this.msgText.nativeElement.value;
-    const id: string = '1';
-    let message: Message = new Message(
+    const subject = this.subjectInputRef.nativeElement.value;
+    const msgText = this.msgTextInputRef.nativeElement.value;
+    const id = '1';
+    const newMessage = new Message(
       id,
-      msgSubject,
+      subject,
       msgText,
-      this.currentSender
+      this.currentSender,
+      null
     );
-    this.messageService.addMessage(message);
-
+    this.messageService.addMessage(newMessage);
     this.onClear();
   }
 
   onClear() {
-    this.subject.nativeElement.value = '';
-    this.msgText.nativeElement.value = '';
+    this.subjectInputRef.nativeElement.value = '';
+    this.msgTextInputRef.nativeElement.value = '';
   }
 }
