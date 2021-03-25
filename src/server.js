@@ -5,6 +5,9 @@ var http = require("http");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var mongoose = require("mongoose");
+var PORT = process.env.PORT || 8080;
+require("dotenv/config");
 
 // import the routing file to handle the default (index) route
 var index = require("./server/routes/app");
@@ -58,14 +61,19 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist/cms/index.html"));
 });
 
-// Define the port address and tell express to use this port
-const port = process.env.PORT || "3000";
-app.set("port", port);
-
-// Create HTTP server.
-const server = http.createServer(app);
-
-// Tell the server to start listening on the provided port
-server.listen(port, function () {
-  console.log("API running on localhost: " + port);
-});
+// Connect to DB
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then((result) => {
+    app.listen(PORT, () => {
+      console.log(`CMS DB connected successfully on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });

@@ -5,20 +5,16 @@ import { Contact } from './contact.model';
   name: 'contactsFilter',
 })
 export class ContactsFilterPipe implements PipeTransform {
-  transform(contacts: Contact[], term: string): Contact[] {
-    if (!contacts.length || !term) {
+  transform(contacts: Contact[], term: string): any {
+    let filteredArray: Contact[] = [];
+    if (term && term.length > 0) {
+      filteredArray = contacts.filter((contact: Contact) =>
+        contact.name.toLowerCase().includes(term.toLowerCase())
+      );
+    }
+    if (filteredArray.length < 1) {
       return contacts;
     }
-    term = term.trim().toLowerCase();
-
-    let filtered = contacts.filter((contact: Contact) => {
-      return contact.name.toLowerCase().includes(term);
-    });
-
-    if (!filtered.length) {
-      return null;
-    }
-
-    return filtered;
+    return filteredArray;
   }
 }

@@ -14,17 +14,11 @@ export class DocumentListComponent implements OnInit {
 
   constructor(private documentService: DocumentService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.documentService.getDocuments();
-    this.documentService.documentChangedEvent.subscribe(
-      (documents: Document[]) => {
-        this.documents = documents.slice();
-      }
-    );
-
     this.subscription = this.documentService.documentListChangedEvent.subscribe(
-      (documentList: Document[]) => {
-        this.documents = documentList;
+      (documentsList: Document[]) => {
+        this.documents = documentsList;
       }
     );
   }
